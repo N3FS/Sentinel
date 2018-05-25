@@ -1,5 +1,9 @@
 **This is a fork of Sentinel to support FactionsUUID.** It does *not* support Factions 2.x.
 
+You can download it from [here](https://ci.ender.zone/job/Sentinel%20for%20FactionsUUID/).
+
+Below is the unaltered README for Sentinel.
+
 ---
 
 Sentinel NPCs: Combat NPCs for Spigot!
