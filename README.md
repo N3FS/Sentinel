@@ -1,3 +1,7 @@
+**This is a fork of Sentinel to support FactionsUUID.** It does *not* support Factions 2.x.
+
+---
+
 Sentinel NPCs: Combat NPCs for Spigot!
 --------------------------------------
 

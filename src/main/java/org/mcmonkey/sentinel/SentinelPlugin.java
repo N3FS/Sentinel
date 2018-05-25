@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -127,19 +128,27 @@ public class SentinelPlugin extends JavaPlugin implements Listener {
             try {
                 integrations.add(new SentinelTowny());
                 getLogger().info("Sentinel found Towny! Adding support for it!");
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-        if (Bukkit.getPluginManager().getPlugin("Factions") != null) {
-            try {
-                integrations.add(new SentinelFactions());
-                getLogger().info("Sentinel found Factions! Adding support for it!");
+
+        Plugin factionsPl = Bukkit.getPluginManager().getPlugin("Factions");
+        if (factionsPl != null) {
+            if (factionsPl.getDescription().getVersion().contains("1.6.9.5-U")) {
+                // FactionsUUID found
+                try {
+                    integrations.add(new SentinelFactionsUUID());
+                    getLogger().info("Sentinel found FactionsUUID! Adding support for it!");
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                // Assume Factions 2.x
+                getLogger().warning("Sentinel found Factions 2.x! Use the original Sentinel plugin for Factions 2.x support.");
             }
-            catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            
         }
         if (Bukkit.getPluginManager().getPlugin("CrackShot") != null) {
             try {

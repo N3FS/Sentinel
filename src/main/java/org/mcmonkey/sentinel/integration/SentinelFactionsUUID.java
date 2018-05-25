@@ -1,16 +1,15 @@
 package org.mcmonkey.sentinel.integration;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.Rel;
-import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.FactionColl;
-import com.massivecraft.factions.entity.MPlayer;
-import com.massivecraft.massivecore.store.Entity;
+import com.massivecraft.factions.struct.Relation;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.mcmonkey.sentinel.SentinelIntegration;
 
-public class SentinelFactions extends SentinelIntegration {
+public class SentinelFactionsUUID extends SentinelIntegration {
 
     @Override
     public String getTargetHelp() {
@@ -22,8 +21,8 @@ public class SentinelFactions extends SentinelIntegration {
         try {
             if (text.startsWith("factions:") && ent instanceof Player) {
                 String factionName = text.substring("factions:".length());
-                Faction faction = FactionColl.get().getByName(factionName);
-                for (MPlayer pl: faction.getMPlayers()) {
+                Faction faction = Factions.getInstance().getFactionById(factionName);
+                for (FPlayer pl: faction.getFPlayers()) {
                     if (pl.getPlayer() != null && pl.getPlayer().getUniqueId() != null
                             && pl.getPlayer().getUniqueId().equals(ent.getUniqueId())) {
                         return true;
@@ -32,17 +31,17 @@ public class SentinelFactions extends SentinelIntegration {
             }
             if (text.startsWith("factionsenemy:") && ent instanceof Player) {
                 String factionName = text.substring("factionsenemy:".length());
-                Faction faction = FactionColl.get().getByName(factionName);
-                Faction plf = MPlayer.get(((Player) ent).getUniqueId()).getFaction();
-                if (faction.getRelationTo(plf).equals(Rel.ENEMY)) {
+                Faction faction = Factions.getInstance().getFactionById(factionName);
+                Faction plf = FPlayers.getInstance().getByPlayer((Player) ent).getFaction();
+                if (faction.getRelationTo(plf).equals(Relation.ENEMY)) {
                     return true;
                 }
             }
             if (text.startsWith("factionsally:") && ent instanceof Player) {
                 String factionName = text.substring("factionsally:".length());
-                Faction faction = FactionColl.get().getByName(factionName);
-                Faction plf = MPlayer.get(((Player) ent).getUniqueId()).getFaction();
-                if (faction.getRelationTo(plf).equals(Rel.ALLY)) {
+                Faction faction = Factions.getInstance().getFactionById(factionName);
+                Faction plf = FPlayers.getInstance().getByPlayer((Player) ent).getFaction();
+                if (faction.getRelationTo(plf).equals(Relation.ALLY)) {
                     return true;
                 }
             }
